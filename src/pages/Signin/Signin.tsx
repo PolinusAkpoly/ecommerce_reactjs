@@ -7,12 +7,13 @@
 import React, { FC, useEffect, Fragment, useState } from 'react';
 // import Loading from '../Loading/Loading';
 import './Signin.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import PageBanner from '../../components/PageBanner/PageBanner';
 import { useFormik } from 'formik';
 import { validateLoginForm } from '../../helpers/utils';
-import Account from '../../components/Account/Account';
 import { signin } from '../../api/entity';
+import { useDispatch } from 'react-redux';
+import { CONNECTED } from '../../redux/actions/actionTypes';
 
 
 
@@ -24,7 +25,7 @@ interface SigninProps {
 
 const Signin: FC<SigninProps> = () => {
   const validate = (values: any) => validateLoginForm(values)
-
+  const dispatch = useDispatch();
   const [redirect, setRedirect] = useState<boolean>(false)
   const [formError, setFormError] = useState<string>('');
   // const [value, setValue] = useState('');
@@ -51,6 +52,13 @@ const Signin: FC<SigninProps> = () => {
       if (result.isSuccess) {
         setRedirect(true)
         setFormError('')
+        dispatch({
+         type: CONNECTED,
+         payload:{
+          token: result.token ,
+          userId: result.userId,
+         } 
+        })
       } else {
         setRedirect(false)
         setFormError(result.message)
@@ -63,7 +71,8 @@ const Signin: FC<SigninProps> = () => {
   
 
   if (redirect) {
-    return <Account />
+
+    return < Navigate to = "/account" />
   }
 
 

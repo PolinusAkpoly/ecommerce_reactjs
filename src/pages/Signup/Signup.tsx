@@ -7,12 +7,12 @@
 import React, { FC, useEffect, Fragment, useState } from 'react';
 // import Loading from '../Loading/Loading';
 import './Signup.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import PageBanner from '../../components/PageBanner/PageBanner';
 import { useFormik } from 'formik';
 import { validateRegisterForm } from '../../helpers/utils';
 import { signup } from '../../api/entity';
-import Signin from '../Signin/Signin';
+
 
 
 interface SignupProps {
@@ -62,7 +62,7 @@ const Signup: FC<SignupProps> = () => {
 
 
   if (redirect) {
-    return <Signin />
+    return <Navigate to="/signin" />
   }
   return (
     <Fragment>

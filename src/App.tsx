@@ -12,6 +12,7 @@ import Footer from './components/Footer/Footer'
 import Signin from './pages/Signin/Signin'
 import Signup from './pages/Signup/Signup'
 import Account from './components/Account/Account'
+import PrivateRoute from './guard/PrivateRoute/PrivateRoute'
 
 const App: React.FC = () => {
 
@@ -44,7 +45,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/account" element={<Account />} />
+          <Route path="/account" element={<PrivateRoute> <Account /> </PrivateRoute>  } />
         </Routes>
         <Footer metas = {metas} />
     </BrowserRouter>
