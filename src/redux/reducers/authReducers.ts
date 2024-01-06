@@ -23,6 +23,7 @@ switch (action.type) {
         return state
         break;
         case LOGOUT:
+            localStorage.removeItem("auth")
             state = {
                 isAuth: false,
                 token: "",

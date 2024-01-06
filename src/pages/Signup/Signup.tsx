@@ -12,6 +12,8 @@ import PageBanner from '../../components/PageBanner/PageBanner';
 import { useFormik } from 'formik';
 import { validateRegisterForm } from '../../helpers/utils';
 import { signup } from '../../api/entity';
+import { useSelector } from 'react-redux';
+import { getAuthState } from '../../redux/selectors/authSelectors';
 
 
 
@@ -25,6 +27,7 @@ const Signup: FC<SignupProps> = () => {
 
   const [redirect, setRedirect] = useState<boolean>(false)
   const [formError, setFormError] = useState<string>('');
+  const isAuth = useSelector(getAuthState)
   // const [value, setValue] = useState('');
 
   useEffect(() => {
@@ -64,7 +67,12 @@ const Signup: FC<SignupProps> = () => {
   if (redirect) {
     return <Navigate to="/signin" />
   }
-  return (
+
+ if (isAuth) {
+    return <Navigate to="/account" />
+  }
+
+   return (
     <Fragment>
       <PageBanner name="Register" />
       <div className="Signup">

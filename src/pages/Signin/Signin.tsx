@@ -14,6 +14,8 @@ import { validateLoginForm } from '../../helpers/utils';
 import { signin } from '../../api/entity';
 import { useDispatch } from 'react-redux';
 import { CONNECTED } from '../../redux/actions/actionTypes';
+import { useSelector } from 'react-redux';
+import { getAuthState } from '../../redux/selectors/authSelectors';
 
 
 
@@ -28,6 +30,7 @@ const Signin: FC<SigninProps> = () => {
   const dispatch = useDispatch();
   const [redirect, setRedirect] = useState<boolean>(false)
   const [formError, setFormError] = useState<string>('');
+  const isAuth = useSelector(getAuthState)
   // const [value, setValue] = useState('');
 
 
@@ -71,7 +74,10 @@ const Signin: FC<SigninProps> = () => {
   
 
   if (redirect) {
+    return < Navigate to = "/account" />
+  }
 
+  if (isAuth) {
     return < Navigate to = "/account" />
   }
 

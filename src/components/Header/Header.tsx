@@ -4,13 +4,18 @@
   App Name : E-commerce with React.Js
   Created At : 10/12/2023 11:12:20
 */
-import React, { FC, useEffect, Fragment} from 'react';
+import React, { FC, useEffect, Fragment } from 'react';
 // import Loading from '../Loading/Loading';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
 import { getMeats } from '../../helpers/utils';
 import { Meta } from '../../models/meta';
+import { useSelector } from 'react-redux';
+import { getAuthState } from '../../redux/selectors/authSelectors';
+import { useDispatch } from 'react-redux';
+import { LOGOUT } from '../../redux/actions/actionTypes';
+
 
 
 
@@ -21,21 +26,36 @@ interface HeaderProps {
 }
 
 
-const Header: FC<HeaderProps> = ({metas}) => {
+const Header: FC<HeaderProps> = ({ metas }) => {
 
 
-   
+
   // const [loading, setLoading] = useState(true);
   // const [value, setValue] = useState('');
- 
+
+  const isAuth = useSelector(getAuthState)
+  const dispatch = useDispatch()
+
   useEffect(() => {
     window.scrollTo(0, 0)
     const runLocalData = async () => {
-     
+
 
     }
     runLocalData()
   }, [])
+
+
+const handleLogout = (event: any) =>{
+event.preventDefault()
+dispatch({
+  type: LOGOUT,
+  payload: null
+})
+
+
+}
+
 
   return (
     <Fragment>
@@ -78,14 +98,30 @@ const Header: FC<HeaderProps> = ({metas}) => {
                 <div className="col-md-6">
                   <div className="text-center text-md-end">
                     <ul className="header_list">
-                      <li><Link  to="/compare"><i className="ti-control-shuffle" /><span>Compare</span></Link></li>
-                      <li><Link  to="/wishlist"><i className="ti-heart" /><span>Wishlist</span></Link></li>
-                      <li><Link  to="/signin"><i className="ti-user" /><span>Signin</span></Link>
-                      </li>
-                      <li><Link  to="/signup"><i className="ti-user" /><span>Signup</span></Link>
-                      </li>
-                      <li />
-                      <li />
+                      <li><Link to="/compare"><i className="ti-control-shuffle" /><span>Compare</span></Link></li>
+                      <li><Link to="/wishlist"><i className="ti-heart" /><span>Wishlist</span></Link></li>
+
+                      {
+                        isAuth ?
+                          <>
+                            <li><Link to="/account"><i className="ti-user" /><span>Account</span></Link></li>
+
+                            <li><a onClick={handleLogout} ><i className="ti-user" /><span>Logout</span></a></li>
+
+                          </>
+                          :
+
+                          <>
+                            <li><Link to="/signin"><i className="ti-user" /><span>Signin</span></Link>
+                            </li>
+                            <li><Link to="/signup"><i className="ti-user" /><span>Signup</span></Link>
+                            </li>
+                          </>
+
+                      }
+
+
+
                     </ul>
                   </div>
                 </div>
@@ -103,12 +139,12 @@ const Header: FC<HeaderProps> = ({metas}) => {
                     <li className="dropdown"><Link to="#" data-bs-toggle="dropdown" className="dropdown-toggle nav-link active" aria-expanded="false">Pages</Link>
                       <div className="dropdown-menu">
                         <ul>
-                          <li><Link className="dropdown-item nav-link nav_item"  to="/about">About Us</Link></li>
-                          <li><Link className="dropdown-item nav-link nav_item"  to="/contact">Contact Us</Link></li>
-                          <li><Link className="dropdown-item nav-link nav_item"  to="/fqa">Faq</Link></li>
-                          <li><Link className="dropdown-item nav-link nav_item"  to="/signin">Login</Link></li>
-                          <li><Link className="dropdown-item nav-link nav_item"  to="/signup">Register</Link></li>
-                          <li><Link className="dropdown-item nav-link nav_item"  to="/terms">Terms and Conditions</Link></li>
+                          <li><Link className="dropdown-item nav-link nav_item" to="/about">About Us</Link></li>
+                          <li><Link className="dropdown-item nav-link nav_item" to="/contact">Contact Us</Link></li>
+                          <li><Link className="dropdown-item nav-link nav_item" to="/fqa">Faq</Link></li>
+                          <li><Link className="dropdown-item nav-link nav_item" to="/signin">Login</Link></li>
+                          <li><Link className="dropdown-item nav-link nav_item" to="/signup">Register</Link></li>
+                          <li><Link className="dropdown-item nav-link nav_item" to="/terms">Terms and Conditions</Link></li>
                         </ul>
                       </div>
                     </li>

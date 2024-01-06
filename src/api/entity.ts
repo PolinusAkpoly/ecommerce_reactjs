@@ -10,6 +10,13 @@ export const getDatas = async (entityName: string) => {
   return datas
 }
 
+export const searchDatas = async (entityName: string, query: string, page = 1, limit = 8) => {
+  const url = webApiUrL + entityName + "/search?" + query + "&pageNumber=" + page + "&pageLimit=" + limit
+
+  const datas = await get(url)
+  return datas
+}
+
 export const getDatasByPage = async (entityName: string, page = 1, limit = 5) => {
   const url = webApiUrL + entityName + "/by/page" + "?pageNumber=" + page + "&pageLimit=" + limit
 
